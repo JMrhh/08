@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Design</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: #00f;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+            display: none; /* سيتم إظهارها لاحقًا */
+        }
+
+        .image-container img {
+            width: 400px;
+            border: 2px solid #00f;
+            border-radius: 10px;
+        }
+
+        .info {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+            display: none; /* سيتم إظهارها لاحقًا */
+        }
+
+        pre {
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .decorative-text {
+            margin-top: 20px;
+            color: #00f;
+            font-size: 1.3rem;
+            text-shadow: 0 0 10px #00f;
+            font-style: italic;
+        }
+
+        .signature-text {
+            margin-top: 15px;
+            color: #ff0000;
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px #ff0000;
+        }
+    </style>
+</head>
+<body>
+
+    <video class="background" autoplay muted loop>
+        <source src="https://cdn.discordapp.com/attachments/1261114958574387241/1295709483401740299/videoplayback.mp4?ex=67615ffd&is=67600e7d&hm=33cea44f0214d7db9491d9f8f7a3ca8450c5b966b953f5f185925073a65f98dc&" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="container">
+        <!-- Banner Section -->
+        <div class="image-container">
+            <img src="https://media.discordapp.net/attachments/1261114958574387241/1318213097953034240/image1.webp?ex=6761811d&is=67602f9d&hm=4e548cb336043898ba8b289beeee13c8c1e732324481d4cd9a0e4ebb2393e34e&=&format=webp" alt="Banner">
+        </div>
+
+        <!-- Decorative Text Section -->
+        <div class="decorative-text">
+            <p>You Get Hacking By المصعبي</p>
+            <p></p>
+            <p> فيفا زحف قروب</p>
+        </div>
+
+        <!-- IP Section -->
+        <div class="info" style="color:blua;">
+            <b>Your IP Address:</b> <span id="ip-address-value">Fetching...</span><br>
+            <b>IP Information:</b>
+            <pre id="ip-info">Fetching...</pre>
+        </div>
+    </div>
+
+    <audio id="audio1" autoplay>
+        <source src="https://cdn.discordapp.com/attachments/1261114958574387241/1318203091555717220/97276c24c7c87938.mp3?ex=676177cc&is=6760264c&hm=f5a8b410a7c6f1da6dc1af44d73db69d7b09d6e99a52f7738b17dfa3c212827a&" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="audio2" loop>
+        <source src="https://cdn.discordapp.com/attachments/1261114958574387241/1295710143186731141/-_Clipchamp_1.mp3?ex=6761609b&is=67600f1b&hm=f2e47f4fa52fa645cec610bc24184b7190920b94c964c5a59eec14263b498977&" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script type="text/javascript">
+        // إخفاء العناصر لمدة 2 ثانيتين
+        setTimeout(() => {
+            document.querySelector('.background').style.display = 'block';
+            document.querySelector('.container').style.display = 'block';
+
+            // تشغيل الصوت الثاني
+            document.getElementById('audio1').pause();
+            document.getElementById('audio2').play();
+        }, 3000);
+
+        function fetchIPAndInfo() {
+            fetch('https://api.ipify.org/?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('ip-address-value').textContent = data.ip;
+                    return data.ip;
+                })
+                .then(ip => fetch(`https://ipinfo.io/${ip}/json`))
+                .then(response => response.json())
+                .then(ipInfoData => {
+                    document.getElementById('ip-info').textContent = JSON.stringify(ipInfoData, null, 2);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('ip-address-value').textContent = 'Unable to fetch IP address.';
+                    document.getElementById('ip-info').textContent = 'Unable to fetch IP information.';
+                });
+        }
+
+        fetchIPAndInfo();
+    </script>
+</body>
+</html>
